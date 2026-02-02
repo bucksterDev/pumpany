@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { Rocket, ArrowRight, BookOpen, Zap } from 'lucide-react';
+import { Rocket, Terminal, Sparkles, ArrowRight, Zap } from 'lucide-react';
 import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
@@ -56,215 +56,238 @@ export default function HomePage() {
       <div className="min-h-screen flex items-center justify-center px-4 py-12">
         <div className="max-w-4xl w-full space-y-12">
           {/* Docs Link */}
-          <div className="text-center">
+          <div className="text-center stagger-1">
             <Link
               to="/docs"
-              className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--border-light)] bg-[var(--bg-primary)] rounded-lg hover:border-[var(--primary)] hover:shadow-sm transition-all text-sm text-[var(--text-secondary)]"
+              className="inline-flex items-center gap-2 px-4 py-2 cyber-border text-xs tracking-wider hover:border-cyan-500/50 transition-all"
             >
-              <BookOpen className="w-4 h-4" />
-              <span>How It Works</span>
+              <Terminal className="w-3 h-3 text-cyan-500" />
+              <span className="text-gray-400">DOCUMENTATION</span>
             </Link>
           </div>
 
-          {/* Header */}
-          <div className="text-center space-y-6 stagger-1">
-            <div className="space-y-4">
-              <h1 className="font-display text-6xl md:text-8xl text-[var(--text-primary)] leading-none">
-                Pumpany
-              </h1>
-              <p className="text-xl text-[var(--primary)] font-semibold">
-                AI Company Launcher
-              </p>
+          {/* Terminal Header */}
+          <div className="text-center space-y-8 stagger-2">
+            <div className="inline-flex items-center gap-3 px-4 py-2 cyber-border">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              <span className="text-[10px] text-gray-500 tracking-widest font-mono">
+                SYSTEM ONLINE
+              </span>
             </div>
 
-            <div className="space-y-3 max-w-2xl mx-auto">
-              <p className="text-lg text-[var(--text-secondary)] leading-relaxed">
-                Deploy autonomous AI agents to Base blockchain. Launch companies powered by intelligent agents that work together to build your vision.
+            <div className="space-y-6">
+              <h1 className="font-display text-7xl md:text-9xl leading-none tracking-tighter">
+                <span className="bg-gradient-to-r from-cyan-500 via-magenta-500 to-yellow-500 bg-clip-text text-transparent">
+                  PUMPANY
+                </span>
+                <span className="text-cyan-500 animate-blink">_</span>
+              </h1>
+
+              <div className="flex items-center justify-center gap-3">
+                <Sparkles className="w-4 h-4 text-magenta-500" />
+                <span className="text-sm tracking-[0.3em] text-gray-400 font-mono">
+                  AI COMPANY SPAWNER
+                </span>
+                <Sparkles className="w-4 h-4 text-cyan-500" />
+              </div>
+            </div>
+
+            <div className="max-w-2xl mx-auto space-y-2">
+              <p className="text-lg font-mono text-cyan-500">
+                {'>'} DEPLOY_AUTONOMOUS_AGENTS.SH
+              </p>
+              <p className="text-sm text-gray-400">
+                Spawn AI agents on Base blockchain. They build companies. You watch.
               </p>
             </div>
           </div>
 
-        {/* Launch Interface */}
-        <form onSubmit={handleSubmit} className="space-y-8 stagger-2">
-          {/* Prompt Input */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="block text-sm font-medium text-[var(--text-primary)]">
-                Company Vision
-              </label>
-              <span className="text-xs text-[var(--text-tertiary)]">
-                {prompt.length >= 10 ? '✓ Ready' : `${10 - prompt.length} characters minimum`}
-              </span>
-            </div>
-
-            <div className={`relative card overflow-hidden transition-all duration-300 ${
-              isTyping ? 'scale-[0.99]' : 'scale-100'
-            }`}>
-              <textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Describe your company vision. What problem does it solve? Who is it for?&#10;&#10;Example: A marketplace for AI-generated art with NFT minting capabilities"
-                className="w-full h-40 px-6 py-4 bg-[var(--bg-primary)] text-[var(--text-primary)] text-sm leading-relaxed placeholder-[var(--text-placeholder)] focus:outline-none resize-none border-0"
-                required
-                minLength={10}
-              />
-              <div className="absolute bottom-4 right-4 flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full transition-colors ${
-                  prompt.length >= 10 ? 'bg-[var(--success)]' : 'bg-[var(--border-medium)]'
-                }`} />
-                <span className="text-xs text-[var(--text-tertiary)]">
-                  {prompt.length} / 10
+          {/* Launch Interface */}
+          <form onSubmit={handleSubmit} className="space-y-8 stagger-3">
+            {/* Prompt Input */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs">
+                <label className="font-mono text-cyan-500 tracking-wider">
+                  [INPUT] COMPANY_DIRECTIVE
+                </label>
+                <span className="font-mono text-gray-600">
+                  {prompt.length >= 10 ? '✓ VALID' : `${10 - prompt.length} CHARS REQUIRED`}
                 </span>
               </div>
-            </div>
 
-            {/* Example Prompts */}
-            {prompt.length === 0 && (
-              <div className="space-y-3">
-                <p className="text-sm font-medium text-[var(--text-secondary)]">
-                  Example ideas to get started:
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {examplePrompts.map((example, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => handleExampleClick(example)}
-                      className="card text-left p-4 hover:shadow-md transition-all group/example"
-                    >
-                      <div className="flex items-start gap-3">
-                        <ArrowRight className="w-4 h-4 text-[var(--primary)] mt-0.5 opacity-0 group-hover/example:opacity-100 transition-opacity" />
-                        <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                          {example}
-                        </p>
-                      </div>
-                    </button>
-                  ))}
+              <div className={`relative cyber-border transition-all duration-300 ${
+                isTyping ? 'scale-[0.98]' : 'scale-100'
+              }`}>
+                <textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  placeholder="// ENTER COMPANY VISION&#10;// WHAT PROBLEM DOES IT SOLVE?&#10;// WHO IS IT FOR?&#10;&#10;Example: A marketplace for AI-generated art..."
+                  className="w-full h-48 px-6 py-5 bg-black/40 text-gray-300 font-mono text-sm leading-loose placeholder-gray-700 focus:outline-none resize-none border-0 backdrop-blur-sm"
+                  required
+                  minLength={10}
+                />
+                <div className="absolute bottom-5 right-5 flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${
+                    prompt.length >= 10 ? 'bg-cyan-500 animate-pulse' : 'bg-gray-800'
+                  }`} />
+                  <span className="text-xs font-mono text-gray-600">
+                    {prompt.length}<span className="text-cyan-500">/</span>10
+                  </span>
                 </div>
               </div>
-            )}
-          </div>
 
-          {/* Compute Level */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="block text-sm font-medium text-[var(--text-primary)]">
-                Compute Level
-              </label>
-              <span className="text-xs text-[var(--text-tertiary)]">
-                {computeLevel === 'low' ? '2' : computeLevel === 'medium' ? '4' : '6'} AI agents
-              </span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              {(['low', 'medium', 'high'] as const).map((level) => {
-                const specs = {
-                  low: { agents: 2, label: 'Basic', description: 'Starter team' },
-                  medium: { agents: 4, label: 'Standard', description: 'Recommended' },
-                  high: { agents: 6, label: 'Advanced', description: 'Full team' },
-                };
-                const spec = specs[level];
-                const isSelected = computeLevel === level;
-
-                return (
-                  <button
-                    key={level}
-                    type="button"
-                    onClick={() => setComputeLevel(level)}
-                    className={`card relative p-6 transition-all duration-200 ${
-                      isSelected
-                        ? 'border-[var(--primary)] shadow-lg scale-105'
-                        : 'hover:shadow-md'
-                    }`}
-                  >
-                    <div className="space-y-3">
-                      <div className="text-2xl">
-                        <Zap className={`w-6 h-6 ${isSelected ? 'text-[var(--primary)]' : 'text-[var(--text-tertiary)]'}`} />
-                      </div>
-                      <div className="space-y-1">
-                        <div className={`text-sm font-semibold capitalize ${isSelected ? 'text-[var(--primary)]' : 'text-[var(--text-primary)]'}`}>
-                          {spec.label}
+              {/* Example Prompts */}
+              {prompt.length === 0 && (
+                <div className="space-y-3">
+                  <p className="text-[10px] font-mono text-gray-600 tracking-widest">
+                    [EXAMPLES]
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {examplePrompts.map((example, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => handleExampleClick(example)}
+                        className="text-left p-4 bg-gray-900/50 border border-gray-800 hover:border-cyan-500/30 transition-all group"
+                      >
+                        <div className="flex items-start gap-3">
+                          <ArrowRight className="w-3 h-3 text-cyan-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <p className="text-xs font-mono text-gray-500 group-hover:text-gray-400 leading-relaxed">
+                            {example}
+                          </p>
                         </div>
-                        <div className="text-xs text-[var(--text-secondary)]">
-                          {spec.agents} agents
-                        </div>
-                        <div className="text-xs text-[var(--text-tertiary)]">
-                          {spec.description}
-                        </div>
-                      </div>
-                    </div>
-                    {isSelected && (
-                      <div className="absolute -top-2 -right-2 w-5 h-5 bg-[var(--primary)] rounded-full flex items-center justify-center shadow-md">
-                        <span className="text-[10px] text-white font-bold">✓</span>
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Launch Button */}
-          <button
-            type="submit"
-            disabled={createCompanyMutation.isPending || prompt.length < 10}
-            className={`w-full py-4 px-8 rounded-lg font-semibold text-base transition-all duration-200 ${
-              createCompanyMutation.isPending || prompt.length < 10
-                ? 'bg-[var(--bg-tertiary)] text-[var(--text-placeholder)] cursor-not-allowed'
-                : 'bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] shadow-md hover:shadow-lg'
-            }`}
-          >
-            <div className="flex items-center justify-center gap-3">
-              {createCompanyMutation.isPending ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Launching Company...</span>
-                </>
-              ) : (
-                <>
-                  <Rocket className="w-5 h-5" />
-                  <span>Launch Company</span>
-                  <ArrowRight className="w-5 h-5" />
-                </>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
-          </button>
 
-          {createCompanyMutation.isError && (
-            <div className="p-4 rounded-lg border border-[var(--error)] bg-[var(--error-light)]">
-              <p className="text-[var(--error)] text-sm flex items-center gap-2">
-                <span className="text-lg">⚠</span>
-                Launch failed: {createCompanyMutation.error?.message || 'Please try again'}
-              </p>
-            </div>
-          )}
-        </form>
+            {/* Compute Level */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-xs">
+                <label className="font-mono text-cyan-500 tracking-wider">
+                  [SELECT] COMPUTE_POWER
+                </label>
+                <span className="font-mono text-gray-600">
+                  {computeLevel === 'low' ? '2' : computeLevel === 'medium' ? '4' : '6'} AGENTS
+                </span>
+              </div>
 
-        {/* Footer */}
-        <div className="text-center space-y-4 stagger-3">
-          <div className="flex items-center justify-center gap-4 text-xs text-[var(--text-tertiary)]">
-            <span>Powered by</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--primary)]" />
-              <span className="font-medium">OpenClaw</span>
+              <div className="grid grid-cols-3 gap-4">
+                {(['low', 'medium', 'high'] as const).map((level) => {
+                  const specs = {
+                    low: { agents: 2, power: 'LOW', icon: <Zap className="w-6 h-6" /> },
+                    medium: { agents: 4, power: 'MED', icon: <><Zap className="w-5 h-5" /><Zap className="w-5 h-5 -ml-3" /></> },
+                    high: { agents: 6, power: 'MAX', icon: <><Zap className="w-4 h-4" /><Zap className="w-4 h-4 -ml-2" /><Zap className="w-4 h-4 -ml-2" /></> },
+                  };
+                  const spec = specs[level];
+                  const isSelected = computeLevel === level;
+
+                  return (
+                    <button
+                      key={level}
+                      type="button"
+                      onClick={() => setComputeLevel(level)}
+                      className={`relative p-6 bg-black/40 border transition-all duration-200 ${
+                        isSelected
+                          ? 'border-cyan-500 shadow-[0_0_20px_rgba(0,255,255,0.3)]'
+                          : 'border-gray-800 hover:border-gray-700'
+                      }`}
+                    >
+                      <div className="space-y-4">
+                        <div className={`flex items-center justify-center ${
+                          isSelected ? 'text-cyan-500' : 'text-gray-700'
+                        }`}>
+                          {spec.icon}
+                        </div>
+                        <div className="space-y-1">
+                          <div className={`font-mono text-sm tracking-widest ${
+                            isSelected ? 'text-cyan-500' : 'text-gray-600'
+                          }`}>
+                            {level.toUpperCase()}
+                          </div>
+                          <div className="font-mono text-[10px] text-gray-700">
+                            {spec.agents} AGENTS • {spec.power}
+                          </div>
+                        </div>
+                      </div>
+                      {isSelected && (
+                        <div className="absolute inset-0 border border-cyan-500 opacity-50 animate-pulse pointer-events-none" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <span>•</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--primary)]" />
-              <span className="font-medium">Base</span>
+
+            {/* Launch Button */}
+            <button
+              type="submit"
+              disabled={createCompanyMutation.isPending || prompt.length < 10}
+              className="relative w-full group overflow-hidden"
+            >
+              <div className={`relative py-6 px-8 border-2 font-mono text-sm tracking-[0.2em] transition-all duration-300 ${
+                createCompanyMutation.isPending || prompt.length < 10
+                  ? 'border-gray-800 bg-gray-900/20 text-gray-700 cursor-not-allowed'
+                  : 'border-cyan-500 bg-cyan-500/5 text-cyan-500 hover:bg-cyan-500 hover:text-black group-hover:shadow-[0_0_30px_rgba(0,255,255,0.5)]'
+              }`}>
+                {/* Animated scan effect */}
+                {!createCompanyMutation.isPending && prompt.length >= 10 && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                )}
+
+                <div className="relative flex items-center justify-center gap-4">
+                  {createCompanyMutation.isPending ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-gray-700 border-t-cyan-500 rounded-full animate-spin" />
+                      <span>INITIALIZING<span className="animate-blink">_</span></span>
+                    </>
+                  ) : (
+                    <>
+                      <Rocket className="w-5 h-5" />
+                      <span>DEPLOY COMPANY</span>
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    </>
+                  )}
+                </div>
+              </div>
+            </button>
+
+            {createCompanyMutation.isError && (
+              <div className="p-5 border border-red-500/50 bg-red-500/5 animate-shake">
+                <p className="text-red-400 font-mono text-xs flex items-center gap-3">
+                  <span className="text-lg">⚠</span>
+                  <span>[ERROR] {createCompanyMutation.error?.message || 'DEPLOYMENT_FAILED'}</span>
+                </p>
+              </div>
+            )}
+          </form>
+
+          {/* Footer */}
+          <div className="text-center space-y-4 stagger-4">
+            <div className="flex items-center justify-center gap-6 text-[10px] font-mono text-gray-700">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                <span>OPENCLAW</span>
+              </div>
+              <span className="text-gray-800">×</span>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-magenta-500 animate-pulse" />
+                <span>BASE</span>
+              </div>
+              <span className="text-gray-800">×</span>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse" />
+                <span>CLANKER</span>
+              </div>
             </div>
-            <span>•</span>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[var(--primary)]" />
-              <span className="font-medium">Clanker</span>
-            </div>
+            <p className="text-[9px] font-mono text-gray-800 tracking-widest">
+              BUILD_v0.1.0 • EXPERIMENTAL
+            </p>
           </div>
-          <p className="text-xs text-[var(--text-tertiary)]">
-            Version 0.1.0 • Experimental Technology
-          </p>
         </div>
       </div>
-    </div>
     </>
   );
 }
