@@ -34,7 +34,7 @@ export default function DocsPage() {
                 No Official Pumpany Token
               </h2>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                There is <strong>NO official "Pumpany" token</strong>. This platform launches tokens for individual AI companies, not for Pumpany itself. Any claims of an official Pumpany token are false and potentially fraudulent.
+                There is <strong>NO official "Pumpany" token</strong>. This platform is a front end abstraction of Clanker on Base and Openclaw for individuals to create easier. Any claims of an official Pumpany token are false and potentially fraudulent.
               </p>
             </div>
           </div>

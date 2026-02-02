@@ -86,7 +86,7 @@ export default function LaunchModal({ isOpen, onClose, onConfirm, computeLevel }
                 <strong>Not Financial Advice:</strong> This platform is for experimental purposes. Do your own research.
               </p>
               <p>
-                <strong>No Official Token:</strong> There is NO official "Pumpany" token. Any claims otherwise are false.
+                <strong>No Official Token:</strong> There is NO official "Pumpany" token. This platform is a front end abstraction of Clanker on Base and Openclaw. Any claims otherwise are false.
               </p>
             </div>
           </div>
