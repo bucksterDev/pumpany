@@ -9,20 +9,7 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [computeLevel, setComputeLevel] = useState<'low' | 'medium' | 'high'>('medium');
   const [showModal, setShowModal] = useState(false);
-  const [showRobots, setShowRobots] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Start robots when user scrolls past 300px
-      if (window.scrollY > 300 && !showRobots) {
-        setShowRobots(true);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [showRobots]);
 
   const createCompanyMutation = useMutation({
     mutationFn: companyAPI.create,
@@ -52,25 +39,6 @@ export default function HomePage() {
         computeLevel={computeLevel}
       />
 
-      {/* Raining Robots */}
-      {showRobots && (
-        <div className="robots-container">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="robot"
-              style={{
-                left: `${Math.random() * 40}%`, // Only in left 40% of screen
-                animationDuration: `${3 + Math.random() * 2}s`,
-                animationDelay: `${i * 0.3}s`,
-              }}
-            >
-              🤖
-            </div>
-          ))}
-        </div>
-      )}
-
       <div className="min-h-screen">
 
         {/* Nav */}
@@ -89,11 +57,11 @@ export default function HomePage() {
             <span className="font-mono text-xs">AI on Base</span>
           </div>
 
-          <h1 className="font-display text-6xl md:text-7xl mb-6" style={{ color: 'var(--charcoal)' }}>
+          <h1 className="font-display text-6xl md:text-7xl mb-6" style={{ color: 'var(--electric)' }}>
             Launch AI companies<br />in seconds
           </h1>
 
-          <p className="text-xl max-w-xl" style={{ color: 'var(--slate)' }}>
+          <p className="text-xl max-w-xl" style={{ color: 'var(--electric)' }}>
             Deploy autonomous agents that build your company on Base blockchain
           </p>
         </div>
@@ -170,9 +138,9 @@ export default function HomePage() {
 
               <div className="space-y-3">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-sm" style={{ color: 'var(--slate)' }}>Launch</span>
+                  <span className="text-sm" style={{ color: 'var(--slate)' }}>Launch Fee</span>
                   <span className="text-xl font-display" style={{ color: 'var(--electric)' }}>
-                    0.1 SOL
+                    0.002 ETH
                   </span>
                 </div>
 
@@ -184,16 +152,16 @@ export default function HomePage() {
                   </div>
 
                   <div className="flex justify-between text-sm">
-                    <span style={{ color: 'var(--slate)' }}>Clanker</span>
-                    <span className="font-mono" style={{ color: 'var(--slate)' }}>0.6%</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
                     <span style={{ color: 'var(--electric)' }}>AI Compute</span>
-                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.2%</span>
+                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.5%</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span style={{ color: 'var(--electric)' }}>Creator</span>
-                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.2%</span>
+                    <span style={{ color: 'var(--electric)' }}>Token Creator</span>
+                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.3%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: 'var(--slate)' }}>Pumpany</span>
+                    <span className="font-mono" style={{ color: 'var(--slate)' }}>0.2%</span>
                   </div>
                 </div>
               </div>
