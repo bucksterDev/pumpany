@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(docker run:*)",
+      "Bash(createdb:*)",
+      "Bash(brew install:*)",
+      "Bash(brew services:*)",
+      "Bash(/opt/homebrew/opt/postgresql@15/bin/createdb:*)"
+    ]
+  }
+}
