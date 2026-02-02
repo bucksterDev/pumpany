@@ -1,35 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Minimal Dark Theme */
-  --bg-void: #000000;
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-tertiary: #1a1a1a;
+  /* Base.app inspired theme */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
 
-  --border-subtle: #222222;
-  --border-dim: #333333;
-  --border-bright: #555555;
+  --border-light: #e5e5e5;
+  --border-medium: #d4d4d4;
+  --border-strong: #a3a3a3;
 
-  --accent-primary: #00ff88;
-  --accent-secondary: #0088ff;
-  --accent-tertiary: #ff0088;
+  --accent-blue: #0000FF;
+  --accent-blue-hover: #0000CC;
+  --accent-green: #00B200;
+  --accent-purple: #AC00D3;
+  --accent-orange: #E45B00;
 
-  --text-primary: #ffffff;
-  --text-secondary: #999999;
-  --text-dim: #666666;
+  --text-primary: #0A0B0D;
+  --text-secondary: #525252;
+  --text-tertiary: #737373;
+  --text-dim: #a3a3a3;
 
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  letter-spacing: -0.01em;
 
-  color-scheme: dark;
+  color-scheme: light;
   color: var(--text-primary);
-  background-color: var(--bg-void);
+  background-color: var(--bg-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -41,50 +44,27 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--bg-void);
+  background: var(--bg-primary);
 }
 
 #root {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
-/* Mono font utility */
-.font-mono {
-  font-family: 'JetBrains Mono', 'SF Mono', monospace;
-}
-
-/* Display font for headings */
+/* Typography */
 .font-display {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-/* Minimal borders */
-.border-minimal {
-  border: 1px solid var(--border-subtle);
-}
-
-.border-minimal:hover {
-  border-color: var(--border-dim);
-}
-
-/* Glow effects - subtle */
-.glow-green {
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
-}
-
-.glow-blue {
-  box-shadow: 0 0 20px rgba(0, 136, 255, 0.15);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 /* Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -101,15 +81,6 @@ body {
   animation: fadeIn 0.4s ease-out;
 }
 
-@keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-.animate-blink {
-  animation: blink 1.2s infinite;
-}
-
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
@@ -121,53 +92,70 @@ body {
 }
 
 /* Stagger reveal utility */
-.stagger-1 { animation: fadeInUp 0.8s ease forwards; animation-delay: 0.1s; opacity: 0; }
-.stagger-2 { animation: fadeInUp 0.8s ease forwards; animation-delay: 0.2s; opacity: 0; }
-.stagger-3 { animation: fadeInUp 0.8s ease forwards; animation-delay: 0.3s; opacity: 0; }
-.stagger-4 { animation: fadeInUp 0.8s ease forwards; animation-delay: 0.4s; opacity: 0; }
+.stagger-1 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.1s; opacity: 0; }
+.stagger-2 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.2s; opacity: 0; }
+.stagger-3 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.3s; opacity: 0; }
+.stagger-4 { animation: fadeInUp 0.6s ease forwards; animation-delay: 0.4s; opacity: 0; }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-dim);
-  border-radius: 4px;
+  background: var(--border-medium);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-bright);
+  background: var(--border-strong);
 }
 
 /* Card styles */
 .card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  transition: all 0.2s ease;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  transition: all 0.2s ease-out;
 }
 
 .card:hover {
-  border-color: var(--border-dim);
+  border-color: var(--border-medium);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* Grid noise texture (very subtle) */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0.02;
-  z-index: 9999;
-  background-image:
-    linear-gradient(var(--border-subtle) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
-  background-size: 50px 50px;
+/* Button base */
+.btn {
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+  letter-spacing: -0.01em;
+}
+
+.btn-primary {
+  background: var(--accent-blue);
+  color: white;
+  border: 2px solid var(--accent-blue);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 255, 0.2);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-light);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--bg-secondary);
 }

@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Info } from 'lucide-react';
 import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [computeLevel, setComputeLevel] = useState<'low' | 'medium' | 'high'>('medium');
-  const [isTyping, setIsTyping] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -34,14 +33,12 @@ export default function HomePage() {
   const examplePrompts = [
     'AI-generated art marketplace with NFT minting',
     'Developer code snippet sharing platform',
-    'AI-powered personalized fitness coaching',
+    'AI fitness coach with personalized plans',
     'Freelance designer equity marketplace',
   ];
 
   const handleExampleClick = (example: string) => {
     setPrompt(example);
-    setIsTyping(true);
-    setTimeout(() => setIsTyping(false), 300);
   };
 
   return (
@@ -53,64 +50,61 @@ export default function HomePage() {
         computeLevel={computeLevel}
       />
 
-      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-20">
-        <div className="max-w-3xl w-full space-y-16">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
+        <div className="max-w-2xl w-full space-y-12">
 
           {/* Header */}
-          <div className="text-center space-y-8 stagger-1">
-            <div className="space-y-4">
-              <h1 className="font-display text-6xl md:text-8xl leading-none tracking-tight">
-                PUMPANY
-              </h1>
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-                <Sparkles className="w-3 h-3" />
-                <span>AI Company Launcher</span>
-              </div>
+          <div className="text-center space-y-6 stagger-1">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--bg-tertiary)] rounded-full text-sm text-[var(--text-secondary)]">
+              <Sparkles className="w-4 h-4 text-[var(--accent-blue)]" />
+              <span>AI Company Launcher on Base</span>
             </div>
 
-            <p className="text-lg text-gray-400 max-w-xl mx-auto leading-relaxed">
-              Deploy autonomous AI agents to build companies on Base
+            <h1 className="font-display text-6xl md:text-7xl leading-[1.1] text-[var(--text-primary)]">
+              Launch AI companies in seconds
+            </h1>
+
+            <p className="text-xl text-[var(--text-secondary)] max-w-xl mx-auto leading-relaxed">
+              Deploy autonomous AI agents that build your company. Powered by OpenClaw and Base blockchain.
             </p>
           </div>
 
           {/* Launch Form */}
-          <form onSubmit={handleSubmit} className="space-y-12 stagger-2">
+          <form onSubmit={handleSubmit} className="space-y-8 stagger-2">
 
             {/* Prompt Input */}
             <div className="space-y-4">
-              <div className="flex items-baseline justify-between">
-                <label className="text-sm text-gray-500 font-mono">
-                  Company Vision
-                </label>
-                <span className="text-xs text-gray-700 font-mono">
-                  {prompt.length}/10
-                </span>
-              </div>
+              <label className="block text-sm font-semibold text-[var(--text-primary)]">
+                Describe your company
+              </label>
 
-              <div className={`border-minimal transition-all ${
-                isTyping ? 'opacity-70' : 'opacity-100'
-              }`}>
-                <textarea
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe your company idea..."
-                  className="w-full h-32 px-5 py-4 bg-transparent text-white text-base leading-relaxed placeholder-gray-700 focus:outline-none resize-none border-0"
-                  required
-                  minLength={10}
-                />
+              <textarea
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder="Example: An AI-powered fitness coach that creates personalized workout plans based on your goals and fitness level..."
+                className="w-full h-40 px-5 py-4 card text-[var(--text-primary)] text-base leading-relaxed placeholder-[var(--text-dim)] focus:outline-none focus:border-[var(--accent-blue)] resize-none transition-all"
+                required
+                minLength={10}
+              />
+
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-[var(--text-tertiary)]">
+                  {prompt.length >= 10 ? '✓ Ready to launch' : `${10 - prompt.length} characters minimum`}
+                </span>
+                <span className="text-[var(--text-dim)]">{prompt.length}/10</span>
               </div>
 
               {/* Example Prompts */}
               {prompt.length === 0 && (
                 <div className="space-y-3">
-                  <p className="text-xs text-gray-700 font-mono">Examples:</p>
+                  <p className="text-sm text-[var(--text-secondary)] font-medium">Try an example:</p>
                   <div className="grid grid-cols-2 gap-2">
                     {examplePrompts.map((example, index) => (
                       <button
                         key={index}
                         type="button"
                         onClick={() => handleExampleClick(example)}
-                        className="text-left px-4 py-3 border-minimal text-sm text-gray-500 hover:text-gray-400 hover:border-gray-700 transition-all"
+                        className="text-left px-4 py-3 card text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-blue)] transition-all"
                       >
                         {example}
                       </button>
@@ -122,21 +116,21 @@ export default function HomePage() {
 
             {/* Compute Level */}
             <div className="space-y-4">
-              <div className="flex items-baseline justify-between">
-                <label className="text-sm text-gray-500 font-mono">
-                  Agent Count
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold text-[var(--text-primary)]">
+                  Agent count
                 </label>
-                <span className="text-xs text-gray-700 font-mono">
-                  {computeLevel === 'low' ? '2' : computeLevel === 'medium' ? '4' : '6'} agents
+                <span className="text-sm text-[var(--text-tertiary)]">
+                  {computeLevel === 'low' ? '2' : computeLevel === 'medium' ? '4' : '6'} AI agents
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 {(['low', 'medium', 'high'] as const).map((level) => {
                   const specs = {
-                    low: { agents: 2, label: 'Basic' },
+                    low: { agents: 2, label: 'Starter' },
                     medium: { agents: 4, label: 'Standard' },
-                    high: { agents: 6, label: 'Advanced' },
+                    high: { agents: 6, label: 'Premium' },
                   };
                   const spec = specs[level];
                   const isSelected = computeLevel === level;
@@ -146,20 +140,20 @@ export default function HomePage() {
                       key={level}
                       type="button"
                       onClick={() => setComputeLevel(level)}
-                      className={`px-6 py-5 border transition-all ${
+                      className={`px-5 py-4 rounded-xl border-2 transition-all ${
                         isSelected
-                          ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/5'
-                          : 'border-[var(--border-subtle)] hover:border-[var(--border-dim)]'
+                          ? 'border-[var(--accent-blue)] bg-blue-50'
+                          : 'border-[var(--border-light)] hover:border-[var(--border-medium)]'
                       }`}
                     >
-                      <div className="space-y-2 text-center">
-                        <div className={`text-sm font-mono ${
-                          isSelected ? 'text-[var(--accent-primary)]' : 'text-gray-500'
+                      <div className="space-y-1 text-center">
+                        <div className={`text-sm font-semibold ${
+                          isSelected ? 'text-[var(--accent-blue)]' : 'text-[var(--text-primary)]'
                         }`}>
                           {spec.label}
                         </div>
-                        <div className="text-xs text-gray-700 font-mono">
-                          {spec.agents}
+                        <div className="text-xs text-[var(--text-tertiary)]">
+                          {spec.agents} agents
                         </div>
                       </div>
                     </button>
@@ -168,60 +162,69 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Fee Info */}
+            <div className="card p-4">
+              <div className="flex items-start gap-3">
+                <Info className="w-5 h-5 text-[var(--accent-blue)] flex-shrink-0 mt-0.5" />
+                <div className="space-y-2 text-sm">
+                  <p className="font-semibold text-[var(--text-primary)]">Launch fee: 0.1 SOL</p>
+                  <p className="text-[var(--text-secondary)] leading-relaxed">
+                    Token trading fees (1% total) are split: 0.6% to Clanker, 0.2% to AI agent compute, 0.2% to you as token creator.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Launch Button */}
             <button
               type="submit"
               disabled={createCompanyMutation.isPending || prompt.length < 10}
-              className={`w-full py-5 border-2 font-mono text-sm tracking-wide transition-all ${
+              className={`w-full py-4 px-6 btn btn-primary text-base ${
                 createCompanyMutation.isPending || prompt.length < 10
-                  ? 'border-gray-900 text-gray-800 cursor-not-allowed'
-                  : 'border-[var(--accent-primary)] text-[var(--accent-primary)] hover:bg-[var(--accent-primary)] hover:text-black glow-green'
+                  ? 'opacity-40 cursor-not-allowed'
+                  : ''
               }`}
             >
               <div className="flex items-center justify-center gap-3">
                 {createCompanyMutation.isPending ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-gray-800 border-t-[var(--accent-primary)] rounded-full animate-spin" />
-                    <span>Deploying<span className="animate-blink">_</span></span>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span>Launching company...</span>
                   </>
                 ) : (
                   <>
-                    <span>Launch Company</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span>Launch company</span>
+                    <ArrowRight className="w-5 h-5" />
                   </>
                 )}
               </div>
             </button>
 
             {createCompanyMutation.isError && (
-              <div className="px-5 py-4 border border-red-500/30 bg-red-500/5 animate-shake">
-                <p className="text-red-500 text-sm font-mono">
-                  Error: {createCompanyMutation.error?.message || 'Deployment failed'}
+              <div className="px-5 py-4 bg-red-50 border border-red-200 rounded-xl animate-shake">
+                <p className="text-red-600 text-sm font-medium">
+                  Error: {createCompanyMutation.error?.message || 'Failed to launch. Please try again.'}
                 </p>
               </div>
             )}
           </form>
 
           {/* Footer */}
-          <div className="text-center space-y-6 stagger-3">
+          <div className="text-center space-y-4 stagger-3">
             <Link
               to="/docs"
-              className="inline-block text-sm text-gray-600 hover:text-gray-400 transition-colors font-mono"
+              className="inline-block text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors font-medium"
             >
-              Documentation
+              How it works →
             </Link>
 
-            <div className="flex items-center justify-center gap-6 text-xs text-gray-800 font-mono">
+            <div className="flex items-center justify-center gap-4 text-xs text-[var(--text-dim)]">
               <span>OpenClaw</span>
-              <span>·</span>
+              <span>•</span>
               <span>Base</span>
-              <span>·</span>
+              <span>•</span>
               <span>Clanker</span>
             </div>
-
-            <p className="text-xs text-gray-900 font-mono">
-              v0.1.0
-            </p>
           </div>
         </div>
       </div>

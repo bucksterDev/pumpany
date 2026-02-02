@@ -48,16 +48,43 @@ export interface Task {
   completedAt?: string;
 }
 
+// Mock mode when backend is not available
+const isMockMode = !API_URL;
+
+const generateMockCompany = (data: { prompt: string; computeLevel: 'low' | 'medium' | 'high' }): Company => ({
+  id: `mock-${Date.now()}`,
+  prompt: data.prompt,
+  computeLevel: data.computeLevel,
+  tokenAddress: '0x' + Math.random().toString(16).substring(2, 42),
+  tokenName: 'Demo Token',
+  tokenSymbol: 'DEMO',
+  computeBalance: '100.00',
+  status: 'active',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+});
+
 export const companyAPI = {
   create: async (data: { prompt: string; computeLevel: 'low' | 'medium' | 'high' }) => {
+    if (isMockMode) {
+      // Mock delay to simulate network request
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      return generateMockCompany(data);
+    }
     const response = await api.post<Company>('/companies', data);
     return response.data;
   },
   getAll: async () => {
+    if (isMockMode) {
+      return [];
+    }
     const response = await api.get<Company[]>('/companies');
     return response.data;
   },
   getById: async (id: string) => {
+    if (isMockMode) {
+      throw new Error('Company not found in mock mode');
+    }
     const response = await api.get<Company>(`/companies/${id}`);
     return response.data;
   },
