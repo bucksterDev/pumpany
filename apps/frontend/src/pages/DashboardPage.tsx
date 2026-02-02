@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { companyAPI, agentAPI, taskAPI, Agent, Task } from '../lib/api';
-import { Activity, Users, ListTodo, TrendingUp, Coins, Terminal, Zap, Circle } from 'lucide-react';
+import { Users, ListTodo, TrendingUp, Coins, Terminal, Circle } from 'lucide-react';
 
 export default function DashboardPage() {
   const { id } = useParams<{ id: string }>();

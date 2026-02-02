@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { Rocket, Zap, Terminal, Cpu } from 'lucide-react';
+import { Rocket, Terminal, Cpu } from 'lucide-react';
 
 export default function HomePage() {
   const [prompt, setPrompt] = useState('');
