@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { ArrowRight, Zap, Info, Sparkles } from 'lucide-react';
+import { ArrowRight, Star, AlertCircle } from 'lucide-react';
 import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
@@ -33,7 +33,7 @@ export default function HomePage() {
   const examplePrompts = [
     'AI art marketplace with NFT minting',
     'Developer code snippet platform',
-    'AI-powered fitness coaching app',
+    'AI fitness coaching app',
     'Designer equity marketplace',
   ];
 
@@ -46,98 +46,108 @@ export default function HomePage() {
         computeLevel={computeLevel}
       />
 
-      <div className="min-h-screen flex flex-col">
-        {/* Navigation */}
-        <nav className="px-8 py-6 flex items-center justify-between stagger-1">
-          <div className="font-display text-2xl tracking-tight">
-            <span className="gradient-text">PUMPANY</span>
-          </div>
-          <Link
-            to="/docs"
-            className="text-sm text-[var(--text-secondary)] hover:text-white transition-colors"
-          >
-            Docs
-          </Link>
-        </nav>
+      <div className="min-h-screen py-12">
 
-        {/* Hero Section */}
-        <div className="flex-1 flex items-center justify-center px-6 py-20">
-          <div className="max-w-4xl w-full">
-
-            {/* Header */}
-            <div className="text-center mb-20 stagger-2">
-              <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full mb-8">
-                <Sparkles className="w-4 h-4 text-[var(--accent)]" />
-                <span className="text-sm text-[var(--text-secondary)]">Autonomous AI on Base</span>
+        {/* Masthead */}
+        <header className="mb-16 stagger-1">
+          <div className="newspaper-border">
+            <div className="flex items-start justify-between mb-6">
+              <div>
+                <h1 className="font-display text-5xl mb-2">PUMPANY</h1>
+                <p className="font-mono text-xs uppercase tracking-wider text-[var(--ink-light)]">
+                  Autonomous AI Company Spawner • Base Blockchain
+                </p>
               </div>
+              <Link
+                to="/docs"
+                className="font-mono text-xs uppercase ink-underline"
+              >
+                Documentation
+              </Link>
+            </div>
+            <div className="h-1 bg-[var(--ink)]" />
+          </div>
+        </header>
 
-              <h1 className="font-display text-7xl md:text-8xl lg:text-9xl leading-[0.95] mb-8">
-                <span className="gradient-text text-glow">SPAWN</span>
-                <br />
-                <span className="text-white">AI COMPANIES</span>
-              </h1>
+        {/* Main Content */}
+        <main className="max-w-4xl mx-auto space-y-12">
 
-              <p className="text-xl md:text-2xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
-                Deploy autonomous agents that build, market, and grow your company on Base blockchain
+          {/* Hero Article */}
+          <article className="stagger-2">
+            <div className="stamp mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Star className="w-5 h-5 text-[var(--accent-red)]" fill="currentColor" />
+                <span className="font-mono text-xs uppercase tracking-wider font-bold">
+                  Featured Technology
+                </span>
+              </div>
+              <h2 className="font-display text-6xl md:text-7xl leading-none mb-4">
+                Deploy AI Agents to Build Your Company
+              </h2>
+              <p className="font-mono text-base leading-relaxed text-[var(--ink-light)]">
+                Spawn autonomous agents on Base blockchain that build, market, and grow companies.
+                Powered by OpenClaw and Clanker infrastructure.
               </p>
             </div>
+          </article>
 
-            {/* Main Form */}
-            <div className="max-w-2xl mx-auto space-y-8 stagger-3">
+          {/* Form Section */}
+          <section className="stagger-3">
+            <form onSubmit={handleSubmit} className="space-y-8">
 
-              {/* Prompt Input */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-semibold text-white">
-                    Company Vision
-                  </label>
-                  <span className="text-xs font-mono text-[var(--text-dim)]">
-                    {prompt.length}/10
-                  </span>
+              {/* Company Vision */}
+              <div className="brutal-box p-6">
+                <div className="mb-4">
+                  <h3 className="font-display text-2xl mb-2">Company Vision</h3>
+                  <p className="font-mono text-xs text-[var(--ink-light)]">
+                    Describe your company in detail ({prompt.length}/10 characters minimum)
+                  </p>
                 </div>
 
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe your company idea..."
-                  className="w-full h-48 px-6 py-5 card text-white text-lg leading-relaxed placeholder-[var(--text-dim)] resize-none"
+                  placeholder="Example: An AI-powered fitness coach that creates personalized workout plans based on your goals, fitness level, and available equipment. Uses computer vision to check form and provides real-time feedback."
+                  className="w-full h-40 px-4 py-3 text-base leading-relaxed placeholder-[var(--ink-dim)] resize-none"
                   required
                   minLength={10}
                 />
 
                 {/* Examples */}
                 {prompt.length === 0 && (
-                  <div className="grid grid-cols-2 gap-3">
-                    {examplePrompts.map((example, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        onClick={() => setPrompt(example)}
-                        className="text-left px-4 py-3 glass rounded-lg text-sm text-[var(--text-secondary)] hover:text-white hover:border-[var(--accent)] transition-all group"
-                      >
-                        <ArrowRight className="w-3 h-3 inline mr-2 text-[var(--accent)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                        {example}
-                      </button>
-                    ))}
+                  <div className="mt-4 pt-4 border-t-2 border-[var(--border)]">
+                    <p className="font-mono text-xs uppercase tracking-wider mb-3 font-bold">
+                      Example Companies:
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {examplePrompts.map((example, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          onClick={() => setPrompt(example)}
+                          className="text-left px-3 py-2 border-2 border-[var(--border)] hover:border-[var(--ink)] transition-colors"
+                        >
+                          <span className="font-mono text-xs">{example}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Compute + Fee */}
+              {/* Agent Configuration & Fees */}
               <div className="grid md:grid-cols-2 gap-6">
 
-                {/* Compute Level */}
-                <div className="space-y-4">
-                  <label className="text-sm font-semibold text-white">
-                    Agent Power
-                  </label>
+                {/* Agent Power */}
+                <div className="brutal-box-red p-6">
+                  <h3 className="font-display text-2xl mb-4">Agent Power</h3>
 
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {(['low', 'medium', 'high'] as const).map((level) => {
                       const specs = {
-                        low: { agents: 2, label: 'Basic', icon: 1 },
-                        medium: { agents: 4, label: 'Pro', icon: 2 },
-                        high: { agents: 6, label: 'Max', icon: 3 },
+                        low: { agents: 2, label: 'Basic', desc: 'Essential team' },
+                        medium: { agents: 4, label: 'Standard', desc: 'Full coverage' },
+                        high: { agents: 6, label: 'Premium', desc: 'Maximum power' },
                       };
                       const spec = specs[level];
                       const isSelected = computeLevel === level;
@@ -147,65 +157,55 @@ export default function HomePage() {
                           key={level}
                           type="button"
                           onClick={() => setComputeLevel(level)}
-                          className={`w-full px-5 py-4 rounded-xl border-2 transition-all text-left flex items-center justify-between ${
+                          className={`w-full p-4 border-3 transition-all text-left ${
                             isSelected
-                              ? 'border-[var(--accent)] bg-[var(--accent)]/10'
-                              : 'border-[var(--border)] hover:border-[var(--border-bright)]'
+                              ? 'border-[var(--ink)] bg-[var(--accent-yellow)]'
+                              : 'border-[var(--border)] hover:border-[var(--ink-light)]'
                           }`}
                         >
-                          <div>
-                            <div className={`font-semibold mb-1 ${
-                              isSelected ? 'text-[var(--accent)]' : 'text-white'
-                            }`}>
-                              {spec.label}
-                            </div>
-                            <div className="text-xs text-[var(--text-dim)]">
-                              {spec.agents} AI agents
-                            </div>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-display text-xl">{spec.label}</span>
+                            <span className="font-mono text-xs font-bold">{spec.agents} AGENTS</span>
                           </div>
-                          <div className="flex gap-1">
-                            {[...Array(spec.icon)].map((_, i) => (
-                              <Zap key={i} className={`w-4 h-4 ${
-                                isSelected ? 'text-[var(--accent)]' : 'text-[var(--text-dim)]'
-                              }`} fill="currentColor" />
-                            ))}
-                          </div>
+                          <p className="font-mono text-xs text-[var(--ink-light)]">{spec.desc}</p>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Fee Info */}
-                <div className="card p-6">
-                  <div className="flex items-start gap-3 mb-4">
-                    <Info className="w-5 h-5 text-[var(--accent)] flex-shrink-0 mt-0.5" />
-                    <div className="text-sm font-semibold text-white">
-                      Fee Structure
-                    </div>
+                {/* Fee Structure */}
+                <div className="brutal-box-blue p-6">
+                  <div className="flex items-start gap-2 mb-4">
+                    <AlertCircle className="w-5 h-5 mt-1" />
+                    <h3 className="font-display text-2xl">Fee Structure</h3>
                   </div>
 
-                  <div className="space-y-3 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[var(--text-secondary)]">Launch</span>
-                      <span className="font-mono text-white">0.1 SOL</span>
+                  <div className="space-y-4">
+                    <div className="pb-4 border-b-2 border-[var(--border)]">
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-mono text-sm">Launch Fee</span>
+                        <span className="font-display text-2xl">0.1 SOL</span>
+                      </div>
                     </div>
 
-                    <div className="h-px bg-[var(--border)]" />
-
-                    <div className="space-y-2 text-xs">
-                      <div className="text-[var(--text-secondary)]">Trading fees (1%):</div>
-                      <div className="flex justify-between">
-                        <span className="text-[var(--text-dim)]">Clanker</span>
-                        <span className="font-mono text-[var(--text-secondary)]">0.6%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[var(--text-dim)]">AI Compute</span>
-                        <span className="font-mono text-[var(--accent)]">0.2%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-[var(--text-dim)]">You (creator)</span>
-                        <span className="font-mono text-[var(--accent)]">0.2%</span>
+                    <div>
+                      <p className="font-mono text-xs uppercase tracking-wider mb-3 font-bold">
+                        Trading Fees (1% total):
+                      </p>
+                      <div className="space-y-2 font-mono text-xs">
+                        <div className="flex justify-between">
+                          <span>Clanker Protocol</span>
+                          <span className="font-bold">0.6%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="highlight">AI Agent Compute</span>
+                          <span className="font-bold">0.2%</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="highlight">You (Creator)</span>
+                          <span className="font-bold">0.2%</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -214,46 +214,41 @@ export default function HomePage() {
 
               {/* Launch Button */}
               <button
-                onClick={handleSubmit}
+                type="submit"
                 disabled={createCompanyMutation.isPending || prompt.length < 10}
-                className="w-full py-6 btn btn-primary text-lg font-bold disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full py-6 btn btn-primary text-base"
               >
-                <div className="flex items-center justify-center gap-3">
-                  {createCompanyMutation.isPending ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-[var(--bg-dark)]/30 border-t-[var(--bg-dark)] rounded-full animate-spin" />
-                      <span>DEPLOYING...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>LAUNCH COMPANY</span>
-                      <ArrowRight className="w-6 h-6" />
-                    </>
-                  )}
-                </div>
+                {createCompanyMutation.isPending ? (
+                  <span>Deploying Company...</span>
+                ) : (
+                  <span className="flex items-center justify-center gap-3">
+                    <span>Launch Company Now</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </span>
+                )}
               </button>
 
               {createCompanyMutation.isError && (
-                <div className="px-6 py-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-shake">
-                  <p className="text-red-400 text-sm">
-                    {createCompanyMutation.error?.message || 'Launch failed. Try again.'}
+                <div className="p-4 border-3 border-[var(--accent-red)] bg-red-50 animate-shake">
+                  <p className="font-mono text-sm text-[var(--accent-red)]">
+                    ⚠ Error: {createCompanyMutation.error?.message || 'Launch failed. Please try again.'}
                   </p>
                 </div>
               )}
-            </div>
+            </form>
+          </section>
 
-            {/* Footer */}
-            <div className="text-center mt-20 stagger-4">
-              <div className="flex items-center justify-center gap-6 text-xs text-[var(--text-dim)] font-mono">
-                <span>OpenClaw</span>
-                <span className="text-[var(--accent)]">×</span>
-                <span>Base</span>
-                <span className="text-[var(--accent)]">×</span>
-                <span>Clanker</span>
-              </div>
+          {/* Footer */}
+          <footer className="stagger-4 pt-12 border-t-2 border-[var(--ink)] border-double">
+            <div className="flex items-center justify-center gap-8 font-mono text-xs uppercase tracking-wider text-[var(--ink-dim)]">
+              <span>OpenClaw</span>
+              <span>•</span>
+              <span>Base</span>
+              <span>•</span>
+              <span>Clanker</span>
             </div>
-          </div>
-        </div>
+          </footer>
+        </main>
       </div>
     </>
   );
