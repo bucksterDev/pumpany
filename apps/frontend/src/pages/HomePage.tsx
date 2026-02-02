@@ -1,13 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { Rocket, Terminal, Cpu, Sparkles, ArrowRight } from 'lucide-react';
+import { Rocket, Terminal, Sparkles, ArrowRight, BookOpen } from 'lucide-react';
+import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [computeLevel, setComputeLevel] = useState<'low' | 'medium' | 'high'>('medium');
   const [isTyping, setIsTyping] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const createCompanyMutation = useMutation({
@@ -20,8 +22,13 @@ export default function HomePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (prompt.length >= 10) {
-      createCompanyMutation.mutate({ prompt, computeLevel });
+      setShowModal(true);
     }
+  };
+
+  const handleConfirmLaunch = () => {
+    setShowModal(false);
+    createCompanyMutation.mutate({ prompt, computeLevel });
   };
 
   const examplePrompts = [
@@ -38,16 +45,35 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12">
-      <div className="max-w-4xl w-full space-y-12">
-        {/* Terminal Header */}
-        <div className="text-center space-y-6 stagger-1">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg border border-[var(--accent-cyan)]/30 bg-[var(--bg-secondary)] mb-4">
-            <Terminal className="w-4 h-4 text-[var(--accent-cyan)]" />
-            <span className="text-xs font-mono text-[var(--text-secondary)] tracking-wider">
-              SYSTEM_STATUS: ONLINE
-            </span>
+    <>
+      <LaunchModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirmLaunch}
+        computeLevel={computeLevel}
+      />
+
+      <div className="min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="max-w-4xl w-full space-y-12">
+          {/* Docs Link */}
+          <div className="text-center">
+            <Link
+              to="/docs"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-[var(--accent-cyan)]/30 bg-[var(--bg-secondary)] rounded-lg hover:border-[var(--accent-cyan)]/60 transition-colors text-sm font-mono text-[var(--text-secondary)]"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>How It Works</span>
+            </Link>
           </div>
+
+          {/* Terminal Header */}
+          <div className="text-center space-y-6 stagger-1">
+            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-lg border border-[var(--accent-cyan)]/30 bg-[var(--bg-secondary)] mb-4">
+              <Terminal className="w-4 h-4 text-[var(--accent-cyan)]" />
+              <span className="text-xs font-mono text-[var(--text-secondary)] tracking-wider">
+                SYSTEM_STATUS: ONLINE
+              </span>
+            </div>
 
           <div className="space-y-2">
             <h1 className="font-display text-7xl md:text-9xl text-[var(--text-primary)] leading-none tracking-tight">
@@ -263,5 +289,6 @@ export default function HomePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
