@@ -203,7 +203,7 @@ export default function HomePage() {
             <span>×</span>
             <span>Base</span>
             <span>×</span>
-            <span>Clanker</span>
+            <span>Flaunch</span>
           </div>
         </div>
       </div>
