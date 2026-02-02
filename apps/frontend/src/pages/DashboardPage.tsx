@@ -26,7 +26,13 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3000/ws';
+    // Only connect to WebSocket if URL is provided
+    const wsUrl = import.meta.env.VITE_WS_URL;
+    if (!wsUrl) {
+      console.log('[WS] No WebSocket URL configured - running in offline mode');
+      return;
+    }
+
     const websocket = new WebSocket(wsUrl);
 
     websocket.onopen = () => {
