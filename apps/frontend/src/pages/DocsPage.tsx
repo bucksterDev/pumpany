@@ -3,13 +3,13 @@ import { ArrowLeft, ExternalLink, AlertTriangle } from 'lucide-react';
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen py-12 px-4">
+    <div className="min-h-screen py-12 px-4 bg-[var(--bg-secondary)]">
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Header */}
         <div className="space-y-6">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-sm font-mono text-[var(--accent-cyan)] hover:underline"
+            className="inline-flex items-center gap-2 text-sm text-[var(--primary)] hover:text-[var(--primary-hover)] font-medium"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Home
@@ -19,18 +19,18 @@ export default function DocsPage() {
             <h1 className="font-display text-5xl text-[var(--text-primary)] mb-4">
               Documentation
             </h1>
-            <p className="text-lg text-[var(--text-secondary)] font-mono">
+            <p className="text-lg text-[var(--text-secondary)]">
               Understanding how Pumpany works
             </p>
           </div>
         </div>
 
         {/* Important Notice */}
-        <div className="p-6 bg-red-500/5 border-2 border-red-500/20 rounded-lg">
+        <div className="card p-6 border-2 border-[var(--error)]">
           <div className="flex items-start gap-4">
-            <AlertTriangle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+            <AlertTriangle className="w-6 h-6 text-[var(--error)] flex-shrink-0 mt-1" />
             <div className="space-y-2">
-              <h2 className="font-mono text-lg text-red-400 font-bold">
+              <h2 className="text-lg text-[var(--error)] font-bold">
                 No Official Pumpany Token
               </h2>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -100,19 +100,19 @@ export default function DocsPage() {
                 tech: 'WebSocket + React Query',
               },
             ].map((item) => (
-              <div key={item.step} className="cyber-border rounded-lg p-6 space-y-3">
+              <div key={item.step} className="card p-6 space-y-3">
                 <div className="flex items-start gap-4">
-                  <div className="font-display text-4xl text-[var(--accent-cyan)]">
+                  <div className="font-display text-4xl text-[var(--primary)]">
                     {item.step}
                   </div>
                   <div className="flex-1 space-y-2">
-                    <h3 className="font-mono text-lg text-[var(--text-primary)] font-bold">
+                    <h3 className="text-lg text-[var(--text-primary)] font-bold">
                       {item.title}
                     </h3>
                     <p className="text-sm text-[var(--text-secondary)]">
                       {item.desc}
                     </p>
-                    <p className="text-xs font-mono text-[var(--accent-cyan)]">
+                    <p className="text-xs text-[var(--primary)] font-medium">
                       Tech: {item.tech}
                     </p>
                   </div>
@@ -149,8 +149,8 @@ export default function DocsPage() {
                 link: '#',
               },
             ].map((tech) => (
-              <div key={tech.name} className="cyber-border rounded-lg p-4 space-y-2">
-                <h3 className="font-mono text-sm text-[var(--accent-cyan)] font-bold">
+              <div key={tech.name} className="card p-4 space-y-2">
+                <h3 className="text-sm text-[var(--primary)] font-bold">
                   {tech.name}
                 </h3>
                 <p className="text-xs text-[var(--text-secondary)]">
@@ -161,7 +161,7 @@ export default function DocsPage() {
                     href={tech.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-[var(--accent-cyan)] hover:underline"
+                    className="inline-flex items-center gap-1 text-xs text-[var(--primary)] hover:text-[var(--primary-hover)] font-medium"
                   >
                     Visit site
                     <ExternalLink className="w-3 h-3" />
@@ -194,8 +194,8 @@ export default function DocsPage() {
           </h2>
 
           <div className="space-y-4">
-            <div className="p-4 bg-[var(--bg-tertiary)] rounded-lg">
-              <h3 className="font-mono text-sm text-[var(--accent-cyan)] mb-2 font-bold">
+            <div className="card p-4 bg-[var(--bg-accent)]">
+              <h3 className="text-sm text-[var(--primary)] mb-2 font-bold">
                 No Guarantees
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -203,8 +203,8 @@ export default function DocsPage() {
               </p>
             </div>
 
-            <div className="p-4 bg-[var(--bg-tertiary)] rounded-lg">
-              <h3 className="font-mono text-sm text-[var(--accent-cyan)] mb-2 font-bold">
+            <div className="card p-4 bg-[var(--bg-accent)]">
+              <h3 className="text-sm text-[var(--primary)] mb-2 font-bold">
                 Token Speculation
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -212,8 +212,8 @@ export default function DocsPage() {
               </p>
             </div>
 
-            <div className="p-4 bg-[var(--bg-tertiary)] rounded-lg">
-              <h3 className="font-mono text-sm text-[var(--accent-cyan)] mb-2 font-bold">
+            <div className="card p-4 bg-[var(--bg-accent)]">
+              <h3 className="text-sm text-[var(--primary)] mb-2 font-bold">
                 No Control
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -221,8 +221,8 @@ export default function DocsPage() {
               </p>
             </div>
 
-            <div className="p-4 bg-[var(--bg-tertiary)] rounded-lg">
-              <h3 className="font-mono text-sm text-[var(--accent-cyan)] mb-2 font-bold">
+            <div className="card p-4 bg-[var(--bg-accent)]">
+              <h3 className="text-sm text-[var(--primary)] mb-2 font-bold">
                 Not Financial Advice
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -261,8 +261,8 @@ export default function DocsPage() {
                 a: 'Yes. The code is available on GitHub. You can deploy your own instance or contribute to the project.',
               },
             ].map((faq, index) => (
-              <div key={index} className="p-4 bg-[var(--bg-tertiary)] rounded-lg space-y-2">
-                <h3 className="font-mono text-sm text-[var(--text-primary)] font-bold">
+              <div key={index} className="card p-4 space-y-2">
+                <h3 className="text-sm text-[var(--text-primary)] font-bold">
                   Q: {faq.q}
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)]">
@@ -274,15 +274,15 @@ export default function DocsPage() {
         </section>
 
         {/* Footer */}
-        <div className="pt-12 border-t border-[var(--bg-tertiary)] text-center">
+        <div className="pt-12 border-t border-[var(--border-light)] text-center">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent-cyan)] text-[var(--bg-void)] rounded hover:bg-[var(--accent-cyan)]/80 transition-colors font-mono text-sm font-bold"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors text-sm font-semibold shadow-md"
           >
             Launch a Company
           </Link>
-          <p className="mt-4 text-xs font-mono text-[var(--text-dim)]">
-            EXPERIMENTAL TECHNOLOGY • USE AT YOUR OWN RISK
+          <p className="mt-4 text-xs text-[var(--text-tertiary)]">
+            Experimental Technology • Use at Your Own Risk
           </p>
         </div>
       </div>
