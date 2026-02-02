@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { ArrowRight, Star, AlertCircle } from 'lucide-react';
+import { ArrowRight, Sparkles, Zap, DollarSign } from 'lucide-react';
 import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
@@ -30,13 +30,6 @@ export default function HomePage() {
     createCompanyMutation.mutate({ prompt, computeLevel });
   };
 
-  const examplePrompts = [
-    'AI art marketplace with NFT minting',
-    'Developer code snippet platform',
-    'AI fitness coaching app',
-    'Designer equity marketplace',
-  ];
-
   return (
     <>
       <LaunchModal
@@ -46,108 +39,89 @@ export default function HomePage() {
         computeLevel={computeLevel}
       />
 
-      <div className="min-h-screen py-12">
+      {/* Floating orbs */}
+      <div className="orb orb-1" />
+      <div className="orb orb-2" />
 
-        {/* Masthead */}
-        <header className="mb-16 stagger-1">
-          <div className="newspaper-border">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h1 className="font-display text-5xl mb-2">PUMPANY</h1>
-                <p className="font-mono text-xs uppercase tracking-wider text-[var(--ink-light)]">
-                  Autonomous AI Company Spawner • Base Blockchain
-                </p>
-              </div>
-              <Link
-                to="/docs"
-                className="font-mono text-xs uppercase ink-underline"
-              >
-                Documentation
-              </Link>
-            </div>
-            <div className="h-1 bg-[var(--ink)]" />
+      <div className="min-h-screen flex flex-col">
+
+        {/* Nav */}
+        <nav className="flex items-center justify-between mb-20 stagger-1">
+          <div className="font-display text-3xl gradient-cyan">
+            PUMPANY
           </div>
-        </header>
+          <Link
+            to="/docs"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--cyan)] transition-colors"
+          >
+            Documentation
+          </Link>
+        </nav>
 
-        {/* Main Content */}
-        <main className="max-w-4xl mx-auto space-y-12">
+        {/* Hero */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="max-w-3xl w-full space-y-16">
 
-          {/* Hero Article */}
-          <article className="stagger-2">
-            <div className="stamp mb-8">
-              <div className="flex items-center gap-2 mb-3">
-                <Star className="w-5 h-5 text-[var(--accent-red)]" fill="currentColor" />
-                <span className="font-mono text-xs uppercase tracking-wider font-bold">
-                  Featured Technology
-                </span>
+            <div className="text-center space-y-8 stagger-2">
+              <div className="badge mx-auto">
+                <Sparkles className="w-4 h-4" />
+                <span>Autonomous AI on Base</span>
               </div>
-              <h2 className="font-display text-6xl md:text-7xl leading-none mb-4">
-                Deploy AI Agents to Build Your Company
-              </h2>
-              <p className="font-mono text-base leading-relaxed text-[var(--ink-light)]">
-                Spawn autonomous agents on Base blockchain that build, market, and grow companies.
-                Powered by OpenClaw and Clanker infrastructure.
+
+              <h1 className="font-display text-7xl md:text-8xl">
+                <span className="text-[var(--text)]">Launch </span>
+                <span className="gradient-cyan">AI Companies</span>
+              </h1>
+
+              <p className="text-xl text-[var(--text-muted)] max-w-xl mx-auto leading-relaxed">
+                Deploy autonomous agents that build, market, and grow your company on Base blockchain
               </p>
             </div>
-          </article>
 
-          {/* Form Section */}
-          <section className="stagger-3">
-            <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Form */}
+            <div className="space-y-8 stagger-3">
 
-              {/* Company Vision */}
-              <div className="brutal-box p-6">
-                <div className="mb-4">
-                  <h3 className="font-display text-2xl mb-2">Company Vision</h3>
-                  <p className="font-mono text-xs text-[var(--ink-light)]">
-                    Describe your company in detail ({prompt.length}/10 characters minimum)
-                  </p>
-                </div>
+              {/* Prompt */}
+              <div className="glow-card">
+                <label className="block text-sm font-semibold text-[var(--text)] mb-3">
+                  Company Vision
+                </label>
 
                 <textarea
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Example: An AI-powered fitness coach that creates personalized workout plans based on your goals, fitness level, and available equipment. Uses computer vision to check form and provides real-time feedback."
-                  className="w-full h-40 px-4 py-3 text-base leading-relaxed placeholder-[var(--ink-dim)] resize-none"
+                  placeholder="Describe your company idea in detail..."
+                  className="w-full h-40 px-5 py-4 text-base leading-relaxed resize-none"
                   required
                   minLength={10}
                 />
 
-                {/* Examples */}
-                {prompt.length === 0 && (
-                  <div className="mt-4 pt-4 border-t-2 border-[var(--border)]">
-                    <p className="font-mono text-xs uppercase tracking-wider mb-3 font-bold">
-                      Example Companies:
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {examplePrompts.map((example, index) => (
-                        <button
-                          key={index}
-                          type="button"
-                          onClick={() => setPrompt(example)}
-                          className="text-left px-3 py-2 border-2 border-[var(--border)] hover:border-[var(--ink)] transition-colors"
-                        >
-                          <span className="font-mono text-xs">{example}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <div className="mt-3 flex items-center justify-between text-sm">
+                  <span className="text-[var(--text-dim)]">
+                    {prompt.length >= 10 ? '✓ Ready to launch' : `${10 - prompt.length} more characters`}
+                  </span>
+                  <span className="text-[var(--text-dim)]">{prompt.length}/10</span>
+                </div>
               </div>
 
-              {/* Agent Configuration & Fees */}
-              <div className="grid md:grid-cols-2 gap-6">
+              {/* Agent Power & Fees Side by Side */}
+              <div className="grid md:grid-cols-5 gap-6">
 
-                {/* Agent Power */}
-                <div className="brutal-box-red p-6">
-                  <h3 className="font-display text-2xl mb-4">Agent Power</h3>
+                {/* Agent Power - takes 3 cols */}
+                <div className="md:col-span-3 glow-card">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Zap className="w-5 h-5 text-[var(--cyan)]" />
+                    <label className="text-sm font-semibold text-[var(--text)]">
+                      Agent Power
+                    </label>
+                  </div>
 
                   <div className="space-y-3">
                     {(['low', 'medium', 'high'] as const).map((level) => {
                       const specs = {
-                        low: { agents: 2, label: 'Basic', desc: 'Essential team' },
-                        medium: { agents: 4, label: 'Standard', desc: 'Full coverage' },
-                        high: { agents: 6, label: 'Premium', desc: 'Maximum power' },
+                        low: { agents: 2, label: 'Basic', desc: 'Essential coverage' },
+                        medium: { agents: 4, label: 'Pro', desc: 'Full team' },
+                        high: { agents: 6, label: 'Max', desc: 'Complete power' },
                       };
                       const spec = specs[level];
                       const isSelected = computeLevel === level;
@@ -157,55 +131,68 @@ export default function HomePage() {
                           key={level}
                           type="button"
                           onClick={() => setComputeLevel(level)}
-                          className={`w-full p-4 border-3 transition-all text-left ${
-                            isSelected
-                              ? 'border-[var(--ink)] bg-[var(--accent-yellow)]'
-                              : 'border-[var(--border)] hover:border-[var(--ink-light)]'
-                          }`}
+                          className={`selection-card w-full ${isSelected ? 'selected' : ''}`}
                         >
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-display text-xl">{spec.label}</span>
-                            <span className="font-mono text-xs font-bold">{spec.agents} AGENTS</span>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-2 h-2 rounded-full ${
+                                isSelected ? 'bg-[var(--cyan)]' : 'bg-[var(--text-dim)]'
+                              }`} />
+                              <div className="text-left">
+                                <div className={`font-semibold text-sm mb-0.5 ${
+                                  isSelected ? 'text-[var(--cyan)]' : 'text-[var(--text)]'
+                                }`}>
+                                  {spec.label}
+                                </div>
+                                <div className="text-xs text-[var(--text-muted)]">
+                                  {spec.desc}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-xs font-semibold text-[var(--text-muted)]">
+                              {spec.agents} agents
+                            </div>
                           </div>
-                          <p className="font-mono text-xs text-[var(--ink-light)]">{spec.desc}</p>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Fee Structure */}
-                <div className="brutal-box-blue p-6">
-                  <div className="flex items-start gap-2 mb-4">
-                    <AlertCircle className="w-5 h-5 mt-1" />
-                    <h3 className="font-display text-2xl">Fee Structure</h3>
+                {/* Fees - takes 2 cols */}
+                <div className="md:col-span-2 glow-card">
+                  <div className="flex items-center gap-2 mb-4">
+                    <DollarSign className="w-5 h-5 text-[var(--orange)]" />
+                    <label className="text-sm font-semibold text-[var(--text)]">
+                      Fees
+                    </label>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="pb-4 border-b-2 border-[var(--border)]">
-                      <div className="flex items-baseline justify-between">
-                        <span className="font-mono text-sm">Launch Fee</span>
-                        <span className="font-display text-2xl">0.1 SOL</span>
+                    <div className="pb-4 border-b border-[var(--deep)]">
+                      <div className="text-xs text-[var(--text-muted)] mb-1">
+                        Launch
+                      </div>
+                      <div className="text-2xl font-display gradient-warm">
+                        0.1 SOL
                       </div>
                     </div>
 
-                    <div>
-                      <p className="font-mono text-xs uppercase tracking-wider mb-3 font-bold">
-                        Trading Fees (1% total):
-                      </p>
-                      <div className="space-y-2 font-mono text-xs">
-                        <div className="flex justify-between">
-                          <span>Clanker Protocol</span>
-                          <span className="font-bold">0.6%</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="highlight">AI Agent Compute</span>
-                          <span className="font-bold">0.2%</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="highlight">You (Creator)</span>
-                          <span className="font-bold">0.2%</span>
-                        </div>
+                    <div className="space-y-2.5">
+                      <div className="text-xs text-[var(--text-muted)] mb-2">
+                        Trading (1% total)
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--text-muted)]">Clanker</span>
+                        <span className="text-[var(--text)]">0.6%</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--cyan)]">AI Compute</span>
+                        <span className="text-[var(--cyan)]">0.2%</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--cyan)]">Creator</span>
+                        <span className="text-[var(--cyan)]">0.2%</span>
                       </div>
                     </div>
                   </div>
@@ -214,41 +201,44 @@ export default function HomePage() {
 
               {/* Launch Button */}
               <button
-                type="submit"
+                onClick={handleSubmit}
                 disabled={createCompanyMutation.isPending || prompt.length < 10}
-                className="w-full py-6 btn btn-primary text-base"
+                className="w-full py-5 btn btn-primary text-base font-semibold"
               >
                 {createCompanyMutation.isPending ? (
-                  <span>Deploying Company...</span>
+                  <span className="flex items-center justify-center gap-3">
+                    <div className="w-5 h-5 border-2 border-[var(--void)]/30 border-t-[var(--void)] rounded-full animate-spin" />
+                    <span>Launching...</span>
+                  </span>
                 ) : (
                   <span className="flex items-center justify-center gap-3">
-                    <span>Launch Company Now</span>
+                    <span>Launch Company</span>
                     <ArrowRight className="w-5 h-5" />
                   </span>
                 )}
               </button>
 
               {createCompanyMutation.isError && (
-                <div className="p-4 border-3 border-[var(--accent-red)] bg-red-50 animate-shake">
-                  <p className="font-mono text-sm text-[var(--accent-red)]">
-                    ⚠ Error: {createCompanyMutation.error?.message || 'Launch failed. Please try again.'}
+                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-shake">
+                  <p className="text-red-400 text-sm">
+                    {createCompanyMutation.error?.message || 'Launch failed. Please try again.'}
                   </p>
                 </div>
               )}
-            </form>
-          </section>
-
-          {/* Footer */}
-          <footer className="stagger-4 pt-12 border-t-2 border-[var(--ink)] border-double">
-            <div className="flex items-center justify-center gap-8 font-mono text-xs uppercase tracking-wider text-[var(--ink-dim)]">
-              <span>OpenClaw</span>
-              <span>•</span>
-              <span>Base</span>
-              <span>•</span>
-              <span>Clanker</span>
             </div>
-          </footer>
-        </main>
+
+            {/* Footer */}
+            <div className="text-center pt-12 stagger-4">
+              <div className="flex items-center justify-center gap-6 text-xs text-[var(--text-dim)]">
+                <span>OpenClaw</span>
+                <span className="text-[var(--cyan)]">×</span>
+                <span>Base</span>
+                <span className="text-[var(--cyan)]">×</span>
+                <span>Clanker</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
