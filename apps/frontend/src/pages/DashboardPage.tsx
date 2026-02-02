@@ -6,7 +6,6 @@ import { Users, ListTodo, TrendingUp, Coins, Terminal, Circle } from 'lucide-rea
 
 export default function DashboardPage() {
   const { id } = useParams<{ id: string }>();
-  const [ws, setWs] = useState<WebSocket | null>(null);
 
   const { data: company, isLoading: companyLoading } = useQuery({
     queryKey: ['company', id],
@@ -42,8 +41,6 @@ export default function DashboardPage() {
     websocket.onerror = (error) => {
       console.error('[WS] Error:', error);
     };
-
-    setWs(websocket);
 
     return () => {
       websocket.close();
