@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
-import { ArrowRight, Sparkles, Zap, DollarSign } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import LaunchModal from '../components/LaunchModal';
 
 export default function HomePage() {
@@ -39,204 +39,171 @@ export default function HomePage() {
         computeLevel={computeLevel}
       />
 
-      {/* Floating orbs */}
-      <div className="orb orb-1" />
-      <div className="orb orb-2" />
-
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen">
 
         {/* Nav */}
-        <nav className="flex items-center justify-between mb-20 stagger-1">
-          <div className="font-display text-3xl gradient-cyan">
-            PUMPANY
+        <nav className="flex items-center justify-between mb-24 stagger-1">
+          <div className="font-display text-2xl" style={{ color: 'var(--charcoal)' }}>
+            Pumpany
           </div>
-          <Link
-            to="/docs"
-            className="text-sm text-[var(--text-muted)] hover:text-[var(--cyan)] transition-colors"
-          >
-            Documentation
+          <Link to="/docs" className="text-sm font-medium">
+            Docs
           </Link>
         </nav>
 
         {/* Hero */}
-        <div className="flex-1 flex items-center justify-center">
-          <div className="max-w-3xl w-full space-y-16">
+        <div className="mb-20 stagger-2">
+          <div className="badge mb-8">
+            <span className="font-mono text-xs">AI on Base</span>
+          </div>
 
-            <div className="text-center space-y-8 stagger-2">
-              <div className="badge mx-auto">
-                <Sparkles className="w-4 h-4" />
-                <span>Autonomous AI on Base</span>
+          <h1 className="font-display text-6xl md:text-7xl mb-6" style={{ color: 'var(--charcoal)' }}>
+            Launch AI companies<br />in seconds
+          </h1>
+
+          <p className="text-xl max-w-xl" style={{ color: 'var(--slate)' }}>
+            Deploy autonomous agents that build your company on Base blockchain
+          </p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl stagger-3">
+
+          {/* Vision */}
+          <div>
+            <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--charcoal)' }}>
+              Company Vision
+            </label>
+
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Describe your company..."
+              className="w-full h-44 px-5 py-4 text-base leading-relaxed resize-none"
+              required
+              minLength={10}
+            />
+
+            <div className="mt-2 text-sm text-right" style={{ color: 'var(--ash)' }}>
+              {prompt.length}/10
+            </div>
+          </div>
+
+          {/* Agent + Fee Grid */}
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* Agent Selection */}
+            <div>
+              <label className="block text-sm font-semibold mb-3" style={{ color: 'var(--charcoal)' }}>
+                Agent Count
+              </label>
+
+              <div className="space-y-2">
+                {(['low', 'medium', 'high'] as const).map((level) => {
+                  const specs = {
+                    low: { agents: 2, label: 'Basic' },
+                    medium: { agents: 4, label: 'Standard' },
+                    high: { agents: 6, label: 'Advanced' },
+                  };
+                  const spec = specs[level];
+
+                  return (
+                    <button
+                      key={level}
+                      type="button"
+                      onClick={() => setComputeLevel(level)}
+                      className={`selection-pill w-full text-left flex items-center justify-between ${
+                        computeLevel === level ? 'active' : ''
+                      }`}
+                    >
+                      <span className="font-semibold" style={{
+                        color: computeLevel === level ? 'var(--electric)' : 'var(--charcoal)'
+                      }}>
+                        {spec.label}
+                      </span>
+                      <span className="text-sm font-mono" style={{ color: 'var(--slate)' }}>
+                        {spec.agents}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Fee Structure */}
+            <div className="info-box">
+              <div className="text-sm font-semibold mb-4" style={{ color: 'var(--charcoal)' }}>
+                Fee Structure
               </div>
 
-              <h1 className="font-display text-7xl md:text-8xl">
-                <span className="text-[var(--text)]">Launch </span>
-                <span className="gradient-cyan">AI Companies</span>
-              </h1>
+              <div className="space-y-3">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-sm" style={{ color: 'var(--slate)' }}>Launch</span>
+                  <span className="text-xl font-display" style={{ color: 'var(--electric)' }}>
+                    0.1 SOL
+                  </span>
+                </div>
 
-              <p className="text-xl text-[var(--text-muted)] max-w-xl mx-auto leading-relaxed">
-                Deploy autonomous agents that build, market, and grow your company on Base blockchain
+                <div className="divider my-3" />
+
+                <div className="space-y-2">
+                  <div className="text-xs mb-2" style={{ color: 'var(--ash)' }}>
+                    Trading fees (1%)
+                  </div>
+
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: 'var(--slate)' }}>Clanker</span>
+                    <span className="font-mono" style={{ color: 'var(--slate)' }}>0.6%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: 'var(--electric)' }}>AI Compute</span>
+                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.2%</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span style={{ color: 'var(--electric)' }}>Creator</span>
+                    <span className="font-mono" style={{ color: 'var(--electric)' }}>0.2%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Launch Button */}
+          <button
+            type="submit"
+            disabled={createCompanyMutation.isPending || prompt.length < 10}
+            className="w-full py-4 btn btn-primary text-base font-semibold"
+          >
+            {createCompanyMutation.isPending ? (
+              <span className="flex items-center justify-center gap-3">
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>Launching...</span>
+              </span>
+            ) : (
+              <span className="flex items-center justify-center gap-3">
+                <span>Launch Company</span>
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            )}
+          </button>
+
+          {createCompanyMutation.isError && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-2xl animate-shake">
+              <p className="text-red-600 text-sm">
+                {createCompanyMutation.error?.message || 'Launch failed. Please try again.'}
               </p>
             </div>
+          )}
+        </form>
 
-            {/* Form */}
-            <div className="space-y-8 stagger-3">
-
-              {/* Prompt */}
-              <div className="glow-card">
-                <label className="block text-sm font-semibold text-[var(--text)] mb-3">
-                  Company Vision
-                </label>
-
-                <textarea
-                  value={prompt}
-                  onChange={(e) => setPrompt(e.target.value)}
-                  placeholder="Describe your company idea in detail..."
-                  className="w-full h-40 px-5 py-4 text-base leading-relaxed resize-none"
-                  required
-                  minLength={10}
-                />
-
-                <div className="mt-3 flex items-center justify-between text-sm">
-                  <span className="text-[var(--text-dim)]">
-                    {prompt.length >= 10 ? '✓ Ready to launch' : `${10 - prompt.length} more characters`}
-                  </span>
-                  <span className="text-[var(--text-dim)]">{prompt.length}/10</span>
-                </div>
-              </div>
-
-              {/* Agent Power & Fees Side by Side */}
-              <div className="grid md:grid-cols-5 gap-6">
-
-                {/* Agent Power - takes 3 cols */}
-                <div className="md:col-span-3 glow-card">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Zap className="w-5 h-5 text-[var(--cyan)]" />
-                    <label className="text-sm font-semibold text-[var(--text)]">
-                      Agent Power
-                    </label>
-                  </div>
-
-                  <div className="space-y-3">
-                    {(['low', 'medium', 'high'] as const).map((level) => {
-                      const specs = {
-                        low: { agents: 2, label: 'Basic', desc: 'Essential coverage' },
-                        medium: { agents: 4, label: 'Pro', desc: 'Full team' },
-                        high: { agents: 6, label: 'Max', desc: 'Complete power' },
-                      };
-                      const spec = specs[level];
-                      const isSelected = computeLevel === level;
-
-                      return (
-                        <button
-                          key={level}
-                          type="button"
-                          onClick={() => setComputeLevel(level)}
-                          className={`selection-card w-full ${isSelected ? 'selected' : ''}`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div className={`w-2 h-2 rounded-full ${
-                                isSelected ? 'bg-[var(--cyan)]' : 'bg-[var(--text-dim)]'
-                              }`} />
-                              <div className="text-left">
-                                <div className={`font-semibold text-sm mb-0.5 ${
-                                  isSelected ? 'text-[var(--cyan)]' : 'text-[var(--text)]'
-                                }`}>
-                                  {spec.label}
-                                </div>
-                                <div className="text-xs text-[var(--text-muted)]">
-                                  {spec.desc}
-                                </div>
-                              </div>
-                            </div>
-                            <div className="text-xs font-semibold text-[var(--text-muted)]">
-                              {spec.agents} agents
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Fees - takes 2 cols */}
-                <div className="md:col-span-2 glow-card">
-                  <div className="flex items-center gap-2 mb-4">
-                    <DollarSign className="w-5 h-5 text-[var(--orange)]" />
-                    <label className="text-sm font-semibold text-[var(--text)]">
-                      Fees
-                    </label>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="pb-4 border-b border-[var(--deep)]">
-                      <div className="text-xs text-[var(--text-muted)] mb-1">
-                        Launch
-                      </div>
-                      <div className="text-2xl font-display gradient-warm">
-                        0.1 SOL
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5">
-                      <div className="text-xs text-[var(--text-muted)] mb-2">
-                        Trading (1% total)
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-[var(--text-muted)]">Clanker</span>
-                        <span className="text-[var(--text)]">0.6%</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-[var(--cyan)]">AI Compute</span>
-                        <span className="text-[var(--cyan)]">0.2%</span>
-                      </div>
-                      <div className="flex justify-between text-xs">
-                        <span className="text-[var(--cyan)]">Creator</span>
-                        <span className="text-[var(--cyan)]">0.2%</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Launch Button */}
-              <button
-                onClick={handleSubmit}
-                disabled={createCompanyMutation.isPending || prompt.length < 10}
-                className="w-full py-5 btn btn-primary text-base font-semibold"
-              >
-                {createCompanyMutation.isPending ? (
-                  <span className="flex items-center justify-center gap-3">
-                    <div className="w-5 h-5 border-2 border-[var(--void)]/30 border-t-[var(--void)] rounded-full animate-spin" />
-                    <span>Launching...</span>
-                  </span>
-                ) : (
-                  <span className="flex items-center justify-center gap-3">
-                    <span>Launch Company</span>
-                    <ArrowRight className="w-5 h-5" />
-                  </span>
-                )}
-              </button>
-
-              {createCompanyMutation.isError && (
-                <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl animate-shake">
-                  <p className="text-red-400 text-sm">
-                    {createCompanyMutation.error?.message || 'Launch failed. Please try again.'}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="text-center pt-12 stagger-4">
-              <div className="flex items-center justify-center gap-6 text-xs text-[var(--text-dim)]">
-                <span>OpenClaw</span>
-                <span className="text-[var(--cyan)]">×</span>
-                <span>Base</span>
-                <span className="text-[var(--cyan)]">×</span>
-                <span>Clanker</span>
-              </div>
-            </div>
+        {/* Footer */}
+        <div className="text-center mt-24 pt-12 border-t stagger-4" style={{ borderColor: 'var(--frost)' }}>
+          <div className="flex items-center justify-center gap-6 text-xs font-mono" style={{ color: 'var(--ash)' }}>
+            <span>OpenClaw</span>
+            <span>×</span>
+            <span>Base</span>
+            <span>×</span>
+            <span>Clanker</span>
           </div>
         </div>
       </div>
