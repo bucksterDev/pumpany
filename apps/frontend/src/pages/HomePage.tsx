@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { companyAPI } from '../lib/api';
@@ -9,7 +9,20 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [computeLevel, setComputeLevel] = useState<'low' | 'medium' | 'high'>('medium');
   const [showModal, setShowModal] = useState(false);
+  const [showRobots, setShowRobots] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Start robots when user scrolls past 300px
+      if (window.scrollY > 300 && !showRobots) {
+        setShowRobots(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showRobots]);
 
   const createCompanyMutation = useMutation({
     mutationFn: companyAPI.create,
@@ -38,6 +51,25 @@ export default function HomePage() {
         onConfirm={handleConfirmLaunch}
         computeLevel={computeLevel}
       />
+
+      {/* Raining Robots */}
+      {showRobots && (
+        <div className="robots-container">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="robot"
+              style={{
+                left: `${Math.random() * 40}%`, // Only in left 40% of screen
+                animationDuration: `${3 + Math.random() * 2}s`,
+                animationDelay: `${i * 0.3}s`,
+              }}
+            >
+              🤖
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="min-h-screen">
 
