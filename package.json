@@ -9,12 +9,13 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
-    "build": "turbo run build",
+    "build": "cd apps/frontend && npm run build",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
     "backend:dev": "npm run dev --workspace=apps/backend",
     "frontend:dev": "npm run dev --workspace=apps/frontend",
-    "contracts:deploy": "npm run deploy --workspace=packages/contracts"
+    "contracts:deploy": "npm run deploy --workspace=packages/contracts",
+    "vercel-build": "cd apps/frontend && npm install && npm run build"
   },
   "devDependencies": {
     "turbo": "^2.0.0",
